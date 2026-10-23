@@ -1,0 +1,28 @@
+# Inventory of every repository in the project. Read by scripts/sync.sh.
+owner: YOUR_GITHUB_USERNAME
+
+repos:
+  - name: gpx-swift
+    visibility: public
+    status: planned        # planned | active | archived
+    sync: true
+  - name: fit-swift
+    visibility: public
+    status: planned
+    sync: true
+  - name: map-swift
+    visibility: public
+    status: planned
+    sync: true
+  - name: gps-swift
+    visibility: public
+    status: planned
+    sync: true
+  - name: audio-swift
+    visibility: public
+    status: planned
+    sync: true
+  - name: app            # TODO: real name
+    visibility: private
+    status: planned
+    sync: false          # app keeps its own config for now
