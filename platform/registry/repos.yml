@@ -1,10 +1,10 @@
-# Inventory of every repository in the project. Read by scripts/sync.sh.
+# Inventory of every repository in the project. Read by platform/scripts/sync.sh (status: active and sync: true).
 owner: jjorgemoura
 
 repos:
   - name: gpx-swift
     visibility: public
-    status: planned        # planned | active | archived
+    status: active         # planned | active | archived
     sync: true
   - name: fit-swift
     visibility: public
