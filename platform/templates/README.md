@@ -30,6 +30,13 @@ platform/scripts/create-library.sh gpx-swift GPXSwift "One sentence about the li
 This creates the public repo on GitHub, pushes the scaffold, applies the repo settings and marks
 the repo active in the registry. It needs `gh` (`brew install gh`, then `gh auth login`).
 
+If you already created the repo on GitHub and cloned it (only a `LICENSE` in it), scaffold into
+the clone instead. This needs no `gh`; it stages the files and you commit and push:
+
+```
+platform/scripts/create-library.sh --into ~/Developer/myProjs/fit-swift fit-swift FITSwift "One sentence"
+```
+
 To try the template without touching GitHub:
 
 ```
