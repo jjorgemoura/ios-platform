@@ -18,7 +18,7 @@ The rules that apply now, one file per area. ADRs in `../decisions/` explain why
 | [Testing](testing.md) | TEST | Swift Testing, fixtures, coverage |
 | [Demo apps](demo-apps.md) | DEMO | Demo app structure |
 | [Documentation](documentation.md) | DOC | DocC, README |
-| [Releases](releases.md) | REL | SemVer, changelog, licence |
+| [Releases](releases.md) | REL | SemVer, release notes, licence |
 | [Git workflow](git-workflow.md) | GIT | Branches, PRs, commits |
 | [CI](ci.md) | CI | Reusable workflows, pinning |
 | [Agents](agents.md) | AGENT | AGENTS.md, CLAUDE.md, skills |

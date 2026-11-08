@@ -6,7 +6,7 @@ Every library is understandable from its README and its DocC documentation alone
 
 ## Scope
 
-README, CHANGELOG, DocC catalogs and doc comments in every library.
+README, DocC catalogs and doc comments in every library.
 
 ## Rules
 
