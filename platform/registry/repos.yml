@@ -8,19 +8,19 @@ repos:
     sync: true
   - name: fit-swift
     visibility: public
-    status: planned
+    status: active
     sync: true
   - name: map-swift
     visibility: public
-    status: planned
+    status: active
     sync: true
   - name: gps-swift
     visibility: public
-    status: planned
+    status: active
     sync: true
   - name: audio-swift
     visibility: public
-    status: planned
+    status: active
     sync: true
   - name: app            # TODO: real name
     visibility: private
