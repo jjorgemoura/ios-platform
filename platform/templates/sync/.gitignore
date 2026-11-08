@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# SwiftPM
+.build/
+/.build
+.swiftpm/
+
+# Xcode
+xcuserdata/
+DerivedData/
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+timeline.xctimeline
+playground.xcworkspace
+
+# DocC
+*.doccarchive
+
+# to evaluate during development
+/Packages
+.netrc
+*.orig
+*.sqlite
+*.xcresult
