@@ -19,7 +19,7 @@ Decisions for the running-libraries project, in [MADR 4.0](https://adr.github.io
 | [0008](0008-linter-swiftlint.md) | Lint with SwiftLint, semantic rules only | proposed |
 | [0009](0009-testing-swift-testing.md) | Use Swift Testing for unit and integration tests | proposed |
 | [0010](0010-demo-apps.md) | Each library ships a multiplatform demo app as a plain Xcode project | proposed |
-| [0011](0011-versioning-and-releases.md) | Version with SemVer tags and Keep a Changelog | proposed |
+| [0011](0011-versioning-and-releases.md) | Version with SemVer tags and generated release notes | proposed |
 | [0012](0012-documentation-docc.md) | Document APIs with DocC, hosted on Swift Package Index | proposed |
 | [0013](0013-license-mit.md) | License the libraries under MIT | proposed |
 | [0014](0014-agent-instruction-files.md) | Use AGENTS.md as the canonical agent instruction file | proposed |

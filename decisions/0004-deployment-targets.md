@@ -54,4 +54,4 @@ Chosen option: "Libraries on 26, app on 27", because the 26 releases already con
 
 ## More Information
 
-Platforms: iOS, iPadOS and macOS now; watchOS and visionOS later, when hardware is available for testing.
+Platforms: iOS, iPadOS, macOS, watchOS, tvOS and visionOS, all built in CI (see the Platforms Standard). Behaviour on watchOS, tvOS and visionOS is verified by building, not by running on devices.

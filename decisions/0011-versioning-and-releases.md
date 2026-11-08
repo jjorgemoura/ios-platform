@@ -4,7 +4,7 @@ date: 2026-10-23
 decision-makers: Jorge
 ---
 
-# Version with SemVer tags and Keep a Changelog
+# Version with SemVer tags and generated release notes
 
 ## Context and Problem Statement
 
@@ -18,22 +18,23 @@ Consumers depend on the libraries through SwiftPM version requirements. How are 
 
 ## Considered Options
 
-* SemVer tags without `v` prefix, Keep a Changelog, GitHub Releases
+* SemVer tags without `v` prefix, GitHub Releases with generated notes
+* SemVer tags with a hand-written `CHANGELOG.md` (Keep a Changelog)
 * SemVer with `v` prefix
 * Automated versioning from Conventional Commits
 
 ## Decision Outcome
 
-Chosen option: "SemVer tags without `v` prefix, Keep a Changelog, GitHub Releases", because it is the SwiftPM convention and keeps releases deliberate. Stay on 0.x until each API settles.
+Chosen option: "SemVer tags without `v` prefix, GitHub Releases with generated notes", because it is the SwiftPM convention, keeps releases deliberate and needs no file to maintain. Stay on 0.x until each API settles.
 
 ### Consequences
 
 * Good, because standard and predictable for consumers
-* Bad, because changelog entries are written by hand
+* Bad, because release notes are only as good as the PR titles (see GIT-3)
 
 ### Confirmation
 
-`release.yml` refuses a tag without a matching `CHANGELOG.md` entry.
+The reusable `release.yml` computes the next SemVer tag and creates the tag and a GitHub Release with generated notes in one step.
 
 ## Pros and Cons of the Options
 
@@ -54,4 +55,4 @@ Chosen option: "SemVer tags without `v` prefix, Keep a Changelog, GitHub Release
 
 ## More Information
 
-https://semver.org · https://keepachangelog.com
+https://semver.org
