@@ -1,5 +1,5 @@
 # Inventory of every repository in the project. Read by scripts/sync.sh.
-owner: YOUR_GITHUB_USERNAME
+owner: jjorgemoura
 
 repos:
   - name: gpx-swift

@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+# All CI logic lives in ios-platform. See standards/ci.md there.
+jobs:
+  ci:
+    uses: jjorgemoura/ios-platform/.github/workflows/ci.yml@v1
+    with:
+      module: __MODULE__
+      demo-scheme: DemoApp
