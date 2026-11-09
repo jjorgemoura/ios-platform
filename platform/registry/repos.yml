@@ -22,7 +22,7 @@ repos:
     visibility: public
     status: active
     sync: true
-  - name: app            # TODO: real name
+  - name: ultra-tools
     visibility: private
-    status: planned
+    status: active
     sync: false          # app keeps its own config for now

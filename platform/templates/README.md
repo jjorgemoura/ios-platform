@@ -5,6 +5,7 @@ Source of every library repo. Built from `gpx-swift`, which is the reference.
 | Folder | Content | Used by |
 | --- | --- | --- |
 | `sync/` | Files that are identical in every repo: `.swiftlint.yml`, `.swift-format`, `.editorconfig`, `.gitignore`, `.xcode-version`, `Makefile`, `CLAUDE.md`, `.github/CODEOWNERS`, `.github/dependabot.yml`, and the shared block of `AGENTS.md`. No tokens. | `create-library.sh` for a new repo, `sync.sh` for existing ones |
+| `monorepo/` | The private apps monorepo scaffold: `Packages/` (starter `Core` and `Features`), `Apps/`, the workspace, a Makefile that loops over the packages, standalone `AGENTS.md`, `.gitignore`, `dependabot.yml` and the CI caller. Applied on top of `sync/`, so its files win. | `create-monorepo.sh` |
 | `library/` | The scaffold only: `Package.swift`, sources, tests, README, LICENSE, the demo app, the workspace, `.spi.yml`, the thin CI callers and the library part of `AGENTS.md`. | `create-library.sh` |
 
 Change a shared file in `sync/`, never in a library repo. A file that must differ per repo does
@@ -46,3 +47,14 @@ cd /tmp/try && make lint && make test
 
 Check the template after changing it: scaffold with `--local`, then run `make lint`,
 `make test`, `make docs` and build every platform and the demo (see `standards/ci.md`).
+
+## Create the monorepo
+
+```
+platform/scripts/create-monorepo.sh --into ~/Developer/myProjs/ultra-tools ultra-tools UltraTools "One sentence"
+```
+
+The repo is private and not synced (`sync: false`). The script needs a clone whose only files are
+`LICENSE` and `README.md`, stages the scaffold and leaves the commit to you. CI calls
+`ci-monorepo.yml@v1`, so move the `v1` tag after pushing a change to that workflow. Try the
+template with `--local DIR`, then run `make lint`, `make test` and `make build PLATFORM=iOS`.

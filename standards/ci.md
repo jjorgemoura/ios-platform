@@ -16,7 +16,7 @@ GitHub Actions workflows in `platform` and in every repository.
 | CI-2 | MUST | Reusable workflows are referenced by tag or commit SHA, not `main` |
 | CI-3 | MUST | CI jobs: `lint`, `test`, `build` (one per platform), `demo`, `docs`. A release is a manual `workflow_dispatch` on `main` that runs CI first, then computes the next SemVer tag and creates the GitHub Release |
 | CI-4 | MUST | Third-party actions are pinned to a commit SHA |
-| CI-5 | SHOULD | The private app runs CI only on PRs to `main` to limit paid macOS minutes |
+| CI-5 | SHOULD | The private apps monorepo calls `ci-monorepo.yml` and runs CI only on PRs to `main` to limit paid macOS minutes |
 | CI-6 | SHOULD | Dependabot updates GitHub Actions and SwiftPM dependencies |
 
 ## Usage

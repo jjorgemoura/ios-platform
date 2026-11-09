@@ -1,0 +1,21 @@
+name: CI
+
+# CI-5: only pull requests to main, to limit paid macOS minutes.
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# All CI logic lives in ios-platform. See standards/ci.md there.
+jobs:
+  ci:
+    uses: __OWNER__/ios-platform/.github/workflows/ci-monorepo.yml@v1
+    with:
+      workspace: __MODULE__.xcworkspace
