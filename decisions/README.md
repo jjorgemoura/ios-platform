@@ -3,7 +3,8 @@
 Decisions for the running-libraries project, in [MADR 4.0](https://adr.github.io/madr/) format.
 
 - New decision: copy `adr-template.md` to the next number, `NNNN-short-title.md`.
-- Accepted ADRs are never edited. To change one, write a new ADR and mark the old one `superseded by ADR-NNNN`.
+- Proposed ADRs are drafts: edit them freely until they are accepted or rejected.
+- Accepted ADRs are not edited, except for their status line and typo or link fixes. To change a decision, write a new ADR that supersedes it, and set the old one to `superseded by ADR-NNNN`.
 - Status values: `proposed`, `accepted`, `rejected`, `deprecated`, `superseded by ADR-NNNN`.
 
 | ADR | Title | Status |

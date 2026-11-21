@@ -55,4 +55,4 @@ Every file in `decisions/` follows `adr-template.md`; the index in `README.md` l
 ## More Information
 
 * https://adr.github.io/madr/
-* Accepted ADRs are never edited; a new ADR supersedes them.
+* Accepted ADRs are not edited, except for their status line and typo or link fixes; a new ADR supersedes them.

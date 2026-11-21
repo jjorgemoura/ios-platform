@@ -39,19 +39,24 @@ CI builds the demo app for iOS and macOS.
 
 ### Multiplatform Xcode app
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because one target runs on iOS and macOS, so one project and one scheme
+* Good, because it uses only Xcode, with no extra tools to install or keep in sync
+* Good, because the demo builds against the local package source through the workspace, so library changes show up immediately
+* Bad, because `.xcodeproj` files merge poorly (low risk for a solo project)
+* Bad, because platform differences in the demo need `#if os(...)` in shared code
 
 ### Separate per-platform projects
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because each demo is tailored to its platform
+* Bad, because two projects to maintain per library, with duplicated code and settings
+* Bad, because twice the demo builds in CI
 
 ### Generated project
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because projects are described in text files, so no `.xcodeproj` merge conflicts
+* Good, because settings are easy to share across the five demo apps
+* Bad, because it adds a third-party tool that must be installed and pinned, against the official-tooling-only driver
+* Bad, because a generated project can lag behind new Xcode features
 ## More Information
 
-{TODO}
+Related: ADR-0009 (UI tests in demo apps). Rules: the Demo apps Standard (DEMO).

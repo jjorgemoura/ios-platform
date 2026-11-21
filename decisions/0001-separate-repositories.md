@@ -39,19 +39,26 @@ Chosen option: "Separate repositories", because visibility, versioning and demo 
 
 ### Separate repositories
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because each library has its own visibility, issues, tags, releases and Swift Package Index page
+* Good, because consumers clone and resolve only the library they use, with no unrelated history or files
+* Good, because the private app never sits next to public code, so nothing private can leak through a public repo
+* Bad, because shared configuration (lint, format, workflows, agent files) must be synced, which is why `sync.sh` and the templates exist
+* Bad, because a change across libraries needs one PR per repo and cannot be tested atomically
 
 ### Monorepo
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because one clone, one CI setup and atomic changes across every library and the app
+* Good, because shared configuration lives once and needs no sync tooling
+* Bad, because a repo is public or private as a whole, so the paid app cannot share it with public libraries
+* Bad, because SwiftPM resolves a package from a repository's root `Package.swift` and its tags, so several independently versioned libraries in one repo do not fit how SwiftPM works
 
 ### Library monorepo plus private app repo
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because the libraries share configuration and CI while the app stays private
+* Good, because there are only two repositories to manage
+* Bad, because the libraries share one tag line, so a release of one library is a release of all of them
+* Bad, because consumers pull every library's sources and history to use one of them
+* Bad, because the libraries share no code (ADR-0002), so the monorepo gives little beyond shared configuration, which the sync script already provides
 ## More Information
 
 Related: ADR-0002.

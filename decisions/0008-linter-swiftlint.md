@@ -39,19 +39,22 @@ CI runs `swiftlint --strict`; `.swiftlint.yml` is synced from `platform`.
 
 ### Semantic rules only
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because the two tools never fight: swift-format owns layout, SwiftLint owns code quality
+* Good, because custom rules (for example on `@unchecked Sendable`) enforce project conventions
+* Good, because a lint failure always means a real problem, not a style dispute
+* Bad, because the disabled-rule list needs review whenever either tool adds rules
 
 ### Default rules
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because there is nothing to configure
+* Bad, because SwiftLint's default style rules conflict with swift-format's output, so formatted code fails lint
+* Bad, because the defaults omit useful opt-in rules and include ones the project does not want
 
 ### No linter
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because one tool less, with faster CI and no configuration to maintain
+* Bad, because force unwraps, unchecked `Sendable` and complexity go unchecked except in review
+* Bad, because there is nowhere to put project-specific rules
 ## More Information
 
 Related: ADR-0007.

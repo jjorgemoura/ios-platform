@@ -38,14 +38,18 @@ CI runs `swift format lint --strict`; `.swift-format` is synced from `platform`.
 
 ### swift-format
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because it ships with the Swift toolchain (`swift format`), so CI and every machine already have it, at the same version as the compiler
+* Good, because Apple maintains it and it follows the language closely
+* Good, because it has a `lint` mode with `--strict` for CI
+* Bad, because it has fewer rules and options than SwiftFormat, so some style preferences cannot be expressed
+* Bad, because it is slower than SwiftFormat on large code bases
 
 ### SwiftFormat
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because it has a large rule set, many options, and is mature and widely used in the community
+* Good, because it is already familiar from work
+* Bad, because it is an extra tool to install and pin in CI and on every machine
+* Bad, because a third-party tool can lag behind new Swift syntax
 ## More Information
 
 Review date: 2027-01-31. Related: ADR-0008.

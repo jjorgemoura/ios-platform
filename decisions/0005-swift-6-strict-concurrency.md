@@ -39,19 +39,23 @@ CI builds with warnings treated as errors; `@unchecked Sendable` requires an exp
 
 ### Swift 6, warnings as errors
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because data races are compile errors, so they never reach main
+* Good, because there is no legacy code, so starting strict costs nothing to migrate
+* Good, because it gives the clearest signal for libraries that are heavily concurrent (gps-swift, audio-swift)
+* Bad, because an Apple framework that is not yet annotated for `Sendable` needs wrapping, `@preconcurrency` or `nonisolated(unsafe)` before it builds
+* Bad, because a new compiler release can add warnings that block merges until they are fixed
 
 ### Swift 6, warnings allowed
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because the same compile-time race checking, without warnings blocking work
+* Bad, because warnings accumulate and get ignored, so they stop being a signal
+* Bad, because deprecations and new diagnostics go unnoticed until they become errors in a later Swift version
 
 ### Swift 5 mode
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because fewer compile errors from frameworks that are not yet annotated
+* Bad, because data races are found at runtime, if at all
+* Bad, because the code must be migrated to Swift 6 mode later, against the goal of using the latest concurrency model
 ## More Information
 
 Related: ADR-0006.

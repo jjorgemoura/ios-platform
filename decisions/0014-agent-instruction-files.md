@@ -39,19 +39,22 @@ Chosen option: "`AGENTS.md` canonical, `CLAUDE.md` imports it", because it serve
 
 ### AGENTS.md canonical
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because the instructions are written once and read by several agents (AGENTS.md is a cross-tool convention)
+* Good, because Claude Code reads them through a one-line `@AGENTS.md` import in `CLAUDE.md`
+* Good, because the shared block is synced by markers while each repo keeps its own section
+* Bad, because Claude-specific features (skills, hooks, settings) still live in Claude-specific files
+* Bad, because the import adds an indirection: editing `CLAUDE.md` by mistake has no effect
 
 ### CLAUDE.md only
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because one file, with no indirection
+* Bad, because other agents do not read it, so adding one later means duplicating or moving the content
 
 ### Per-agent files
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because each file uses every feature of its agent
+* Bad, because the same rules live in several files and drift apart
+* Bad, because every new agent adds another file to sync to every repo
 ## More Information
 
 Initial shared skills: `add-public-api`, `cut-release`.

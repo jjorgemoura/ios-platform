@@ -39,19 +39,22 @@ Chosen option: "Libraries on 26, app on 27", because the 26 releases already con
 
 ### Libraries 26, app 27
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because the libraries work for consumers who still support the 26 releases
+* Good, because the app uses 27-only APIs without availability checks
+* Good, because the 26 releases already contain Observation, modern Swift concurrency and current CoreLocation APIs
+* Bad, because libraries need `@available` checks for any 27-only API they use
+* Bad, because there are two minimums to remember and review against
 
 ### All 27
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because one minimum everywhere and no availability checks in the libraries
+* Good, because the libraries can use every new API immediately
+* Bad, because the public libraries exclude every consumer still supporting the 26 releases, during the first year after release
 
 ### All 26
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because one minimum everywhere and the widest reach
+* Bad, because the app needs availability checks or must give up 27-only features, though it has no older users to support
 ## More Information
 
 Platforms: iOS, iPadOS, macOS, watchOS, tvOS and visionOS, all built in CI (see the Platforms Standard). Behaviour on watchOS, tvOS and visionOS is verified by building, not by running on devices.

@@ -39,19 +39,23 @@ Each library repo contains `LICENSE` (MIT) and declares it in the README.
 
 ### MIT
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because it is short, widely understood and the most common licence for Swift packages
+* Good, because it is compatible with a closed, paid app and with any consumer
+* Good, because it asks only that the copyright notice is kept, so there is no friction for reuse
+* Bad, because it has no explicit patent grant
+* Bad, because anyone can use the code in closed products without contributing back
 
 ### Apache-2.0
 
-* Good, because {TODO}
-* Bad, because {TODO}
+* Good, because it is permissive like MIT and adds an explicit patent grant and patent retaliation clause
+* Good, because it is the licence of Swift itself and many Apple open-source projects
+* Bad, because it is longer, and asks consumers to keep a NOTICE file and mark changed files
 
 ### No licence
 
-* Good, because {TODO}
-* Bad, because {TODO}
-
+* Good, because the author keeps every right
+* Bad, because no one can legally use, copy or modify the code, which defeats publishing it as a library
+* Bad, because it discourages contributions and adoption
 ## More Information
 
 Check the FIT protocol / SDK licence before publishing fit-swift (separate ADR).
