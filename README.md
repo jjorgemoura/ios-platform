@@ -24,7 +24,7 @@ Listed in [`platform/registry/repos.yml`](platform/registry/repos.yml).
 | --- | --- |
 | [`decisions/`](decisions/) | Architecture Decision Records (MADR): why things are the way they are |
 | [`standards/`](standards/) | The rules that apply now, each with an ID (`CI-2`, `TEST-3`) to cite in reviews |
-| [`.github/workflows/`](.github/workflows/) | Reusable workflows: `ci.yml` and `release.yml` for libraries, `ci-monorepo.yml` for the monorepo |
+| [`.github/workflows/`](.github/workflows/) | Reusable workflows: `ci.yml` and `release.yml` for libraries, `ci-monorepo.yml` for the monorepo, `pr-title.yml` for every repo |
 | [`.github/actions/select-xcode/`](.github/actions/select-xcode/) | Selects the Xcode pinned in the caller's `.xcode-version` |
 | [`platform/templates/`](platform/templates/) | Scaffolds for new repos and the files synced into existing ones |
 | [`platform/scripts/`](platform/scripts/) | `create-library.sh`, `create-monorepo.sh`, `sync.sh` |

@@ -1,0 +1,38 @@
+name: PR title (reusable)
+
+# Called by every repo (GIT-3). Release notes are generated from PR titles (REL-2), and the
+# create-release skill picks the version bump from them, so each title is a Conventional Commit:
+# `type(optional scope)!: description`, for example `feat(parser): read extensions` or
+# `fix!: drop the deprecated reader`.
+#
+#   on:
+#     pull_request:
+#       types: [opened, edited, reopened, synchronize]
+#   jobs:
+#     pr-title:
+#       uses: jjorgemoura/ios-platform/.github/workflows/pr-title.yml@v1
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conventional Commit title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          re='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: [^[:space:]].*$'
+          if [[ "$TITLE" =~ $re ]]; then
+            echo "OK: $TITLE"
+          else
+            echo "::error::PR title '$TITLE' is not a Conventional Commit (GIT-3)."
+            echo "Expected 'type(scope)!: description' with type one of feat, fix, docs, style,"
+            echo "refactor, perf, test, build, ci, chore, revert. Scope and '!' are optional;"
+            echo "'!' marks a breaking change. Edit the title and the check runs again."
+            exit 1
+          fi

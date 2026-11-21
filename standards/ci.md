@@ -21,7 +21,8 @@ GitHub Actions workflows in `platform` and in every repository.
 
 ## Usage
 
-The reusable workflows live in `.github/workflows/` of this repo (`ci.yml`, `release.yml`) and the
+The reusable workflows live in `.github/workflows/` of this repo (`ci.yml`, `release.yml`,
+`pr-title.yml`, `ci-monorepo.yml`) and the
 shared `select-xcode` action in `.github/actions/`. Each header comment shows the caller to copy.
 The `v1` tag moves forward with compatible changes; a breaking change to the inputs gets `v2`.
 Workflows and the action reference each other as `@v1`, so a branch cannot be tried before it is
@@ -49,6 +50,7 @@ name from the reusable workflow.
 | `ci / demo (iOS Simulator)` | Yes | Skipped when `demo` is false |
 | `ci / demo (macOS)` | Yes | Skipped when `demo` is false |
 | `ci / docs` | No | Skipped on PRs; runs on `main` and before a release |
+| `pr-title / check` | Yes | Separate `PR title` workflow (GIT-3), synced from `platform/templates/sync` |
 
 `ios-platform` uses the same ruleset without required checks, since it has no CI of its own.
 `ultra-tools` has no ruleset: GitHub's free plan does not offer rulesets or branch protection

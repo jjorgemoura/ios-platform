@@ -24,7 +24,7 @@ All repositories.
 | --- | --- | --- |
 | GIT-1 | `Main` ruleset: PRs only, no force push or deletion | GitHub settings |
 | GIT-2 | `Main` ruleset: required checks listed in the CI Standard | GitHub settings |
-| GIT-3 | PR title check | reusable workflow |
+| GIT-3 | PR title check (`pr-title / check`) | reusable `pr-title.yml` |
 | GIT-4 | Repo merge settings | GitHub settings |
 | GIT-5 | Review | PR |
 

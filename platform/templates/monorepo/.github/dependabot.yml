@@ -4,12 +4,18 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore(deps) # PR titles are Conventional Commits (GIT-3)
   # Add one entry per package that has external dependencies.
   - package-ecosystem: swift
     directory: /Packages/Core
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore(deps) # PR titles are Conventional Commits (GIT-3)
   - package-ecosystem: swift
     directory: /Packages/Features
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore(deps) # PR titles are Conventional Commits (GIT-3)
