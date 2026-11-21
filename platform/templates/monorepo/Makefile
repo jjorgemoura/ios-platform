@@ -24,7 +24,7 @@ lint-xcode:
 # Analyzer rules need a compiler log from a clean build, so this is slow.
 analyse:
 	@for p in $(PACKAGES); do \
-		rm -rf $$p/.build/analyse; \
+		rm -rf $$p/.build/analyse && mkdir -p $$p/.build; \
 		swift build --package-path $$p --scratch-path $$p/.build/analyse -v > $$p/.build/analyse.log 2>&1 \
 			|| { tail -20 $$p/.build/analyse.log; exit 1; }; \
 		swiftlint analyze --compiler-log-path $$p/.build/analyse.log; \

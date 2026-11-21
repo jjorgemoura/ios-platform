@@ -57,4 +57,4 @@ Chosen option: "`AGENTS.md` canonical, `CLAUDE.md` imports it", because it serve
 * Bad, because every new agent adds another file to sync to every repo
 ## More Information
 
-Initial shared skills: `add-public-api`, `cut-release`.
+Initial shared skills: `add-public-api`, `create-release`.

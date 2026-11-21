@@ -27,7 +27,7 @@ on:
         type: string
         default: "0.65.1"
       runner:
-        description: macOS runner label that has the pinned Xcode.
+        description: macOS runner label that has the pinned Xcode. The default is the GitHub-hosted Xcode 27 image (public preview); switch to macos-27 when it reaches GA.
         type: string
         default: xcode-27
 
@@ -38,7 +38,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     # Pinned to noble: the prebuilt SwiftLint binary needs libxml2.so.2.
-    container: swift:noble
+    container: swift:6.4-noble
     env:
       SWIFTLINT_VERSION: ${{ inputs.swiftlint-version }}
     steps:

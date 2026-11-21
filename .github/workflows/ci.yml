@@ -9,7 +9,7 @@ name: CI (reusable)
 #       with:
 #         module: GPXSwift
 #
-# The library repo must provide: a Makefile with `test` and `docs` targets,
+# The library repo must provide: a Makefile with a `docs` target,
 # `.xcode-version`, `.swiftlint.yml` and, when `demo` is true, the demo workspace.
 
 on:
@@ -44,7 +44,7 @@ on:
         type: string
         default: "0.65.1"
       runner:
-        description: macOS runner label that has the pinned Xcode.
+        description: macOS runner label that has the pinned Xcode. The default is the GitHub-hosted Xcode 27 image (public preview); switch to macos-27 when it reaches GA.
         type: string
         default: xcode-27
 
@@ -54,9 +54,9 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    # Pinned to noble: the prebuilt SwiftLint binary needs libxml2.so.2, which
-    # newer distros behind swift:latest no longer package.
-    container: swift:noble
+    # Swift 6.4 (TOOL-1) on noble: the prebuilt SwiftLint binary needs libxml2.so.2,
+    # which newer distros no longer package.
+    container: swift:6.4-noble
     env:
       SWIFTLINT_VERSION: ${{ inputs.swiftlint-version }}
     steps:
@@ -79,11 +79,22 @@ jobs:
         run: |
           swift build -v > build.log 2>&1 || { tail -20 build.log; exit 1; }
           swiftlint analyze --compiler-log-path build.log
+      # ADR-0002 / API-1: a library never depends on another library in this set. Every
+      # repo of the owner is in the set, so no resolved dependency may come from the owner.
+      - name: Libraries are independent
+        env:
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          [ -f Package.resolved ] || { echo "No dependencies."; exit 0; }
+          if grep -iE "\"location\" *: *\"[^\"]*github\.com[/:]${OWNER}/" Package.resolved; then
+            echo "::error::A library must not depend on another ${OWNER} repository (API-1, ADR-0002)."
+            exit 1
+          fi
 
   test-linux:
     if: inputs.linux
     runs-on: ubuntu-latest
-    container: swift:latest
+    container: swift:6.4-noble # same Swift as the pinned Xcode (TOOL-1)
     steps:
       - uses: actions/checkout@v7
       - run: swift test -Xswiftc -warnings-as-errors
@@ -116,7 +127,29 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: jjorgemoura/ios-platform/.github/actions/select-xcode@v1
-      - run: make test
+      # Same flags as `make test`, plus coverage (ADR-0009). Coverage is reported, not gated.
+      - name: Test
+        run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
+      - name: Coverage report
+        run: |
+          echo '### Coverage (sources, line coverage)' >> "$GITHUB_STEP_SUMMARY"
+          python3 - "$(swift test --show-codecov-path)" <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
+          import json, os, sys
+          files = [f for f in json.load(open(sys.argv[1]))["data"][0]["files"]
+                   if "/.build/" not in f["filename"] and "/Tests/" not in f["filename"]]
+          root = os.getcwd() + "/"
+          covered = sum(f["summary"]["lines"]["covered"] for f in files)
+          total = sum(f["summary"]["lines"]["count"] for f in files)
+          print("| File | Lines | Covered |\n| --- | ---: | ---: |")
+          for f in sorted(files, key=lambda f: f["filename"]):
+              s = f["summary"]["lines"]
+              print(f"| `{f['filename'].replace(root, '')}` | {s['count']} | {s['percent']:.1f}% |")
+          percent = 100 * covered / max(total, 1)
+          print(f"| **Total** | {total} | {percent:.1f}% |")
+          open(os.environ["RUNNER_TEMP"] + "/coverage", "w").write(f"{percent:.1f}")
+          PY
+          # TEST-6: SHOULD reach 85%. A warning, not a failure.
+          awk -v p="$(cat "$RUNNER_TEMP/coverage")" 'BEGIN { if (p < 85) printf "::warning::Line coverage %s%% is below 85%% (TEST-6).\n", p }'
 
   demo:
     if: inputs.demo

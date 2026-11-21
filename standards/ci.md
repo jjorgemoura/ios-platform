@@ -15,7 +15,7 @@ GitHub Actions workflows in `platform` and in every repository.
 | CI-1 | MUST | Library repos call the reusable workflows in `platform`; they hold no CI logic of their own |
 | CI-2 | MUST | Reusable workflows are referenced by tag or commit SHA, not `main` |
 | CI-3 | MUST | CI jobs: `lint`, `test`, `build` (one per platform), `demo`, `docs`. A release is a manual `workflow_dispatch` on `main` that runs CI first, then computes the next SemVer tag and creates the GitHub Release |
-| CI-4 | MUST | Third-party actions are pinned to a commit SHA |
+| CI-4 | MUST | Actions owned by GitHub (`actions/*`) may be referenced by major tag; any other third-party action is pinned to a commit SHA |
 | CI-5 | SHOULD | The private apps monorepo calls `ci-monorepo.yml` and runs CI only on PRs to `main` to limit paid macOS minutes |
 | CI-6 | SHOULD | Dependabot updates GitHub Actions and SwiftPM dependencies |
 
@@ -55,13 +55,13 @@ table and the branch protection rule in every repo in the same step.
 | CI-1 | Template `ci.yml` is a thin caller | repo template |
 | CI-2 | Review | `.github/workflows/` |
 | CI-3 | Required status checks | GitHub settings |
-| CI-4 | Review | `.github/workflows/` |
+| CI-4 | Review; Dependabot updates tags and pinned SHAs | `.github/workflows/` |
 | CI-5 | Workflow triggers | app repo `ci.yml` |
 | CI-6 | `dependabot.yml` | repo template |
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

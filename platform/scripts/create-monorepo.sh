@@ -102,6 +102,9 @@ log "scaffolding in $DEST"
 mkdir -p "$DEST"
 cp -R "$TEMPLATES/sync/." "$DEST/"
 rm -f "$DEST/AGENTS.md"
+# The shared skills are about library work (public API, SemVer releases); the monorepo has neither.
+rm -rf "$DEST/.claude/skills/add-public-api" "$DEST/.claude/skills/create-release"
+rmdir "$DEST/.claude/skills" "$DEST/.claude" 2>/dev/null || true
 cp -R "$TEMPLATES/monorepo/." "$DEST/"
 
 # 2. Tokens, in contents and then in names (deepest first, so parents are renamed last).
