@@ -1,6 +1,6 @@
 ---
-status: proposed
-date: 2026-10-23
+status: accepted
+date: 2026-11-21
 decision-makers: Jorge
 ---
 
@@ -33,7 +33,7 @@ Chosen option: "Separate repositories", because visibility, versioning and demo 
 
 ### Confirmation
 
-`platform/registry/repos.yml` lists every repository; the sync workflow keeps templated files identical.
+`platform/registry/repos.yml` lists every repository; the sync script (`platform/scripts/sync.sh`) keeps templated files identical.
 
 ## Pros and Cons of the Options
 

@@ -1,6 +1,6 @@
 ---
-status: proposed
-date: 2026-10-23
+status: accepted
+date: 2026-11-21
 decision-makers: Jorge
 ---
 
@@ -18,13 +18,13 @@ The libraries are hard to tune in isolation (GPS battery profiles, audio mixing,
 
 ## Considered Options
 
-* One multiplatform Xcode app in `Demo/`, consuming the package as a local package
+* One multiplatform Xcode app in `Examples/`, consuming the package as a local package
 * Separate iOS and macOS demo projects
 * Generated project (Tuist or XcodeGen)
 
 ## Decision Outcome
 
-Chosen option: "One multiplatform Xcode app in `Demo/`", because it uses only official tooling and always builds against the local package source.
+Chosen option: "One multiplatform Xcode app in `Examples/`", because it uses only official tooling and always builds against the local package source.
 
 ### Consequences
 

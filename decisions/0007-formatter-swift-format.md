@@ -1,10 +1,10 @@
 ---
-status: proposed
-date: 2026-10-23
+status: accepted
+date: 2026-11-21
 decision-makers: Jorge
 ---
 
-# Format code with Apple's swift-format (trial)
+# Format code with Apple's swift-format
 
 ## Context and Problem Statement
 
@@ -14,7 +14,6 @@ All repositories need one consistent formatting style, applied automatically. Wh
 
 * Ships with the toolchain; no extra installation
 * Integrated in Xcode
-* Curiosity: compare against SwiftFormat used at work
 
 ## Considered Options
 
@@ -23,7 +22,7 @@ All repositories need one consistent formatting style, applied automatically. Wh
 
 ## Decision Outcome
 
-Chosen option: "Apple swift-format", as a trial, because it ships with the toolchain. Review on 2027-01-31; fall back to SwiftFormat if it falls short.
+Chosen option: "Apple swift-format", because it is the official formatter and ships with the toolchain, so every machine and CI runner already has it at the same version as the compiler.
 
 ### Consequences
 
@@ -52,4 +51,4 @@ CI runs `swift format lint --strict`; `.swift-format` is synced from `platform`.
 * Bad, because a third-party tool can lag behind new Swift syntax
 ## More Information
 
-Review date: 2027-01-31. Related: ADR-0008.
+Related: ADR-0008.
