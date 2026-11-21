@@ -23,7 +23,7 @@ Public and package-level symbols in every library.
 
 | Rule | Check | Where |
 | --- | --- | --- |
-| API-1 | CI fails if another set library appears in `Package.resolved` | reusable `ci.yml` |
+| API-1 | CI fails if `Package.resolved` has a dependency from the owner's GitHub account | reusable `ci.yml` job `lint` |
 | API-2 | Review | PR |
 | API-3 | Review: new dependency without ADR is rejected | PR |
 | API-4 | Review | PR |
@@ -32,7 +32,7 @@ Public and package-level symbols in every library.
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

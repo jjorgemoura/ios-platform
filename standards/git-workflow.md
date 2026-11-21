@@ -30,7 +30,7 @@ All repositories.
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

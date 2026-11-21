@@ -6,13 +6,13 @@ Each library has a demo app that exercises it in isolation for development, tuni
 
 ## Scope
 
-The `Demo/` folder of every library repository.
+The `Examples/` folder of every library repository.
 
 ## Rules
 
 | ID | Level | Rule |
 | --- | --- | --- |
-| DEMO-1 | MUST | One multiplatform Xcode app in `Demo/`, plain `.xcodeproj`, no Tuist or XcodeGen |
+| DEMO-1 | MUST | One multiplatform Xcode app in `Examples/`, plain `.xcodeproj`, no Tuist or XcodeGen |
 | DEMO-2 | MUST | The demo consumes the library as a local package |
 | DEMO-3 | MUST | The demo builds for iOS and macOS in CI |
 | DEMO-4 | SHOULD | The demo covers every main feature listed in the library's spec |
@@ -23,14 +23,14 @@ The `Demo/` folder of every library repository.
 | Rule | Check | Where |
 | --- | --- | --- |
 | DEMO-1 | Review | PR |
-| DEMO-2 | Review | `Demo/*.xcodeproj` |
-| DEMO-3 | Build job | reusable `ci.yml` job `build-demo` |
+| DEMO-2 | Review | `Examples/*.xcodeproj` |
+| DEMO-3 | Build job | reusable `ci.yml` job `demo` |
 | DEMO-4 | Review | PR |
 | DEMO-5 | Review | PR |
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

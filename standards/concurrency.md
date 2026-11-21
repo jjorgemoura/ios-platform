@@ -32,7 +32,7 @@ All Swift code in libraries, demo apps and the app.
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

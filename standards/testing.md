@@ -28,11 +28,11 @@ Library test targets and demo app UI tests.
 | TEST-3 | Review + coverage report | reusable `ci.yml` job `test` |
 | TEST-4 | Review | PR |
 | TEST-5 | Review | PR |
-| TEST-6 | Coverage gate (warning only at first) | reusable `ci.yml` job `test` |
+| TEST-6 | Coverage report in the job summary; warning below 85% | reusable `ci.yml` job `test` |
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

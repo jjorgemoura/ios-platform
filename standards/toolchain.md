@@ -22,13 +22,13 @@ All library repositories, the app repository and the `platform` reusable workflo
 | Rule | Check | Where |
 | --- | --- | --- |
 | TOOL-1 | Build fails on mismatch | `Package.swift` |
-| TOOL-2 | Synced from `platform/templates` | sync workflow |
+| TOOL-2 | Synced from `platform/templates` | `sync.sh` |
 | TOOL-3 | Explicit `xcode-select` step | reusable `ci.yml` |
 | TOOL-4 | Review | upgrade PRs |
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

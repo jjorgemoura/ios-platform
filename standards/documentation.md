@@ -30,7 +30,7 @@ README, DocC catalogs and doc comments in every library.
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

@@ -27,12 +27,12 @@ Coding agents get the same rules, commands and context as a human contributor, f
 | AGENT-2 | Template | repo template |
 | AGENT-3 | Review | `AGENTS.md` |
 | AGENT-4 | Review when standards change | `platform` PR |
-| AGENT-5 | Sync | sync workflow |
+| AGENT-5 | Sync | `sync.sh` |
 | AGENT-6 | Review | `AGENTS.md` |
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

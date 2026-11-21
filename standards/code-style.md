@@ -25,7 +25,7 @@ All Swift source and test files.
 | STYLE-1 | `swift format lint --strict` | reusable `ci.yml` job `lint` |
 | STYLE-2 | `swiftlint --strict` | reusable `ci.yml` job `lint` |
 | STYLE-3 | Review of `.swiftlint.yml` | `platform/templates` |
-| STYLE-4 | Sync | sync workflow |
+| STYLE-4 | Sync | `sync.sh` |
 | STYLE-5 | SwiftLint rules `force_unwrapping`, `force_try` | `.swiftlint.yml` |
 
 ## Exceptions
@@ -34,7 +34,7 @@ All Swift source and test files.
 
 ## Rationale
 
-* ADR-0007: Format code with Apple's swift-format (trial)
+* ADR-0007: Format code with Apple's swift-format
 * ADR-0008: Lint with SwiftLint, semantic rules only
 
 ## Last reviewed

@@ -26,7 +26,7 @@ Each library declares and builds exactly the platforms it supports.
 | gps-swift | 26 | 26 | 26 | 26 | 26 | No |
 | audio-swift | 26 | 26 | 26 | 26 | 26 | No |
 
-Only gpx-swift is built so far. Review the other rows when each library is created, and mark a platform No where its frameworks are unavailable (for example CoreLocation features on tvOS).
+gpx-swift is the reference implementation; the other libraries are scaffolded. Review each row when its library gets real code, and mark a platform No where its frameworks are unavailable (for example CoreLocation features on tvOS).
 
 ## Enforcement
 
@@ -40,7 +40,7 @@ Only gpx-swift is built so far. Review the other rows when each library is creat
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 

@@ -32,7 +32,7 @@ Tags and GitHub Releases in every library repository.
 
 ## Exceptions
 
-{TODO}
+None.
 
 ## Rationale
 
