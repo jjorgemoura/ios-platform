@@ -30,7 +30,9 @@ All Swift source and test files.
 
 ## Exceptions
 
-{TODO: e.g. `// swiftlint:disable:next <rule> — STYLE-5: reason`}
+A SwiftLint rule may be disabled for one line, with the rule ID it breaks and the reason:
+`// swiftlint:disable:next force_unwrapping — STYLE-5: <reason>`. Never disable a rule for a
+whole file or in `.swiftlint.yml` of a single repo.
 
 ## Rationale
 

@@ -28,6 +28,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TEMPLATES="$ROOT/templates/sync"
 REGISTRY="$ROOT/registry/repos.yml"
 
+# shellcheck source=lib/git-account.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/git-account.sh"
+
 BRANCH="platform-sync"
 BEGIN_MARK="<!-- BEGIN platform (synced, do not edit) -->"
 END_MARK="<!-- END platform -->"
@@ -102,6 +105,8 @@ sync_repo_in() {
   log "$name" "cloning $full"
   gh repo clone "$full" "$dir" -- --quiet --depth 1
   git -C "$dir" checkout --quiet -B "$BRANCH"
+  use_platform_identity "$dir"
+  use_gh_credentials "$dir"
 
   apply_templates "$dir"
 

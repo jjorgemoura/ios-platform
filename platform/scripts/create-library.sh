@@ -13,8 +13,8 @@
 #                 LICENSE, and its origin must be <owner>/<repo-name>. The files are left
 #                 staged: review with `git status`, then commit and push yourself. No gh.
 #                 Marks the repo active in the registry.
-#   --protect     Also turn on branch protection for main (GIT-1, GIT-2). Off by default
-#                 while the repos are being set up. See standards/ci.md for the checks.
+#   --protect     Also add the "Main" ruleset to protect main (GIT-1, GIT-2): PRs only, and
+#                 the CI checks in standards/ci.md must pass. GitHub mode only.
 #
 # Steps:
 #   1. copy templates/sync (files shared by every repo), then templates/library
@@ -32,6 +32,9 @@ REGISTRY="$ROOT/registry/repos.yml"
 TEMPLATES="$ROOT/templates"
 BEGIN_MARK="<!-- BEGIN platform (synced, do not edit) -->"
 END_MARK="<!-- END platform -->"
+
+# shellcheck source=lib/git-account.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/git-account.sh"
 
 LOCAL_DIR=""
 INTO_DIR=""
@@ -55,15 +58,14 @@ MODULE="${POSITIONAL[1]}"
 DESCRIPTION="${POSITIONAL[2]:-}"
 
 [[ -z "$LOCAL_DIR" || -z "$INTO_DIR" ]] || { echo "error: use --local or --into, not both" >&2; exit 1; }
-[[ -z "$INTO_DIR" ]] || ! $PROTECT || { echo "error: --protect needs the GitHub mode" >&2; exit 1; }
+[[ -z "$INTO_DIR$LOCAL_DIR" ]] || ! $PROTECT || { echo "error: --protect needs the GitHub mode" >&2; exit 1; }
 
 [[ "$NAME"   =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { echo "error: repo-name must be kebab-case" >&2; exit 1; }
 [[ "$MODULE" =~ ^[A-Z][A-Za-z0-9]*$ ]]       || { echo "error: ModuleName must be UpperCamelCase" >&2; exit 1; }
 
 OWNER="$(sed -n 's/^owner: *//p' "$REGISTRY" | head -n 1)"
 [[ -n "$OWNER" && "$OWNER" != "YOUR_GITHUB_USERNAME" ]] || { echo "error: set owner in $REGISTRY" >&2; exit 1; }
-HOLDER="$(git config user.name || true)"
-[[ -n "$HOLDER" ]] || { echo "error: git config user.name is empty (used for the LICENSE)" >&2; exit 1; }
+HOLDER="$PLATFORM_GIT_NAME"
 [[ -n "$DESCRIPTION" ]] || DESCRIPTION="TODO: one sentence describing $MODULE."
 
 FULL="$OWNER/$NAME"
@@ -165,6 +167,7 @@ export NAME MODULE MODULE_LOWER OWNER HOLDER DESCRIPTION YEAR
 
 # 4. Git.
 if [[ -n "$INTO_DIR" ]]; then
+  use_platform_identity "$DEST"
   git -C "$DEST" add -A
   mark_active
   log "scaffolded into $DEST and staged (nothing committed or pushed)"
@@ -183,6 +186,8 @@ EOF
   exit 0
 fi
 git -C "$DEST" init -q -b main
+use_platform_identity "$DEST"
+[[ -n "$LOCAL_DIR" ]] || use_gh_credentials "$DEST"
 git -C "$DEST" add -A
 git -C "$DEST" commit -q -m "chore: scaffold $NAME from ios-platform@$PLATFORM_SHA"
 
@@ -207,15 +212,43 @@ gh repo edit "$FULL" \
 
 if $PROTECT; then
   log "protecting main"
-  # TODO: set required_status_checks.contexts to the names listed in standards/ci.md.
-  gh api -X PUT "repos/$FULL/branches/main/protection" --input - >/dev/null <<'JSON'
+  # The same "Main" ruleset as the existing libraries (GIT-1, GIT-2): changes land through a PR,
+  # and the PR merges only when the checks listed in standards/ci.md pass. No approval is
+  # required, since the only developer cannot approve their own PR. Repository admins may
+  # bypass it for emergencies. 15368 is the GitHub Actions app, so only Actions can report
+  # these checks.
+  gh api -X POST "repos/$FULL/rulesets" --input - >/dev/null <<'JSON'
 {
-  "required_status_checks": null,
-  "enforce_admins": false,
-  "required_pull_request_reviews": { "required_approving_review_count": 0 },
-  "restrictions": null,
-  "allow_force_pushes": false,
-  "allow_deletions": false
+  "name": "Main",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
+  "bypass_actors": [{ "actor_id": 5, "actor_type": "RepositoryRole", "bypass_mode": "always" }],
+  "rules": [
+    { "type": "deletion" },
+    { "type": "non_fast_forward" },
+    { "type": "pull_request", "parameters": {
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": false,
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false,
+        "allowed_merge_methods": ["merge", "squash"] } },
+    { "type": "required_status_checks", "parameters": {
+        "strict_required_status_checks_policy": false,
+        "do_not_enforce_on_create": false,
+        "required_status_checks": [
+          { "context": "ci / lint", "integration_id": 15368 },
+          { "context": "ci / test", "integration_id": 15368 },
+          { "context": "ci / test-linux", "integration_id": 15368 },
+          { "context": "ci / build (iOS)", "integration_id": 15368 },
+          { "context": "ci / build (macOS)", "integration_id": 15368 },
+          { "context": "ci / build (watchOS)", "integration_id": 15368 },
+          { "context": "ci / build (tvOS)", "integration_id": 15368 },
+          { "context": "ci / build (visionOS)", "integration_id": 15368 },
+          { "context": "ci / demo (iOS Simulator)", "integration_id": 15368 },
+          { "context": "ci / demo (macOS)", "integration_id": 15368 } ] } }
+  ]
 }
 JSON
 fi

@@ -30,6 +30,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REGISTRY="$ROOT/registry/repos.yml"
+
+# shellcheck source=lib/git-account.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/git-account.sh"
 TEMPLATES="$ROOT/templates"
 
 LOCAL_DIR=""
@@ -141,6 +144,7 @@ export NAME MODULE MODULE_LOWER OWNER DESCRIPTION YEAR
 
 # 3. Git.
 if [[ -n "$INTO_DIR" ]]; then
+  use_platform_identity "$DEST"
   git -C "$DEST" add -A
   mark_active
   log "scaffolded into $DEST and staged (nothing committed or pushed)"
@@ -159,6 +163,7 @@ EOT
 fi
 
 git -C "$DEST" init -q -b main
+use_platform_identity "$DEST"
 git -C "$DEST" add -A
 git -C "$DEST" commit -q -m "chore: scaffold $NAME from ios-platform@$PLATFORM_SHA"
 log "done: $DEST (local only; nothing was pushed, registry untouched)"

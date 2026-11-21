@@ -22,19 +22,23 @@ All repositories.
 
 | Rule | Check | Where |
 | --- | --- | --- |
-| GIT-1 | Branch protection | GitHub settings |
-| GIT-2 | Required status checks | GitHub settings |
+| GIT-1 | `Main` ruleset: PRs only, no force push or deletion | GitHub settings |
+| GIT-2 | `Main` ruleset: required checks listed in the CI Standard | GitHub settings |
 | GIT-3 | PR title check | reusable workflow |
 | GIT-4 | Repo merge settings | GitHub settings |
 | GIT-5 | Review | PR |
 
 ## Exceptions
 
-None.
+* `ultra-tools` (GIT-1, GIT-2): private, and GitHub's free plan has no rulesets or branch
+  protection for private repositories. Changes still go through PRs by convention, and CI runs
+  on every PR to `main` (CI-5).
+* Repository admins may bypass the `Main` ruleset in an emergency. A bypass also skips the
+  required checks.
 
 ## Rationale
 
-* {TODO: no ADR yet; add one if these rules are contested}
+* No ADR: these rules follow common GitHub practice. Write one if a rule is contested.
 
 ## Last reviewed
 

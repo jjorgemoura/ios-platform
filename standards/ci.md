@@ -27,26 +27,36 @@ The `v1` tag moves forward with compatible changes; a breaking change to the inp
 Workflows and the action reference each other as `@v1`, so a branch cannot be tried before it is
 tagged unless you temporarily point those references at the branch.
 
-Branch protection (GIT-2) must require the job names as the caller reports them: the caller's
-job id, then the job name from the reusable workflow. Branch protection is not enabled yet.
-When it is, require these checks in a library repo (GitHub only lists a check after it has run):
+Each library protects `main` with a repository ruleset named `Main` (GIT-1, GIT-2): changes land
+through a PR, no approval is required (the only developer cannot approve their own PR), and the
+PR merges only when the checks below pass. Repository admins may bypass the ruleset; keep that for
+emergencies, because a bypass also skips the checks. `create-library.sh --protect` creates the
+same ruleset for a new library.
+
+A ruleset requires the job names as the caller reports them: the caller's job id, then the job
+name from the reusable workflow.
 
 | Check | Required | Note |
 | --- | --- | --- |
 | `ci / lint` | Yes | |
 | `ci / test` | Yes | macOS tests |
-| `ci / test-linux` | Yes, if `linux` is true | |
+| `ci / test-linux` | Yes | Skipped when `linux` is false; GitHub counts a skipped check as passing |
 | `ci / build (iOS)` | Yes | One build check per platform in the `platforms` input |
 | `ci / build (macOS)` | Yes | |
 | `ci / build (watchOS)` | Yes | |
 | `ci / build (tvOS)` | Yes | |
 | `ci / build (visionOS)` | Yes | |
-| `ci / demo (iOS Simulator)` | Yes, if `demo` is true | |
-| `ci / demo (macOS)` | Yes, if `demo` is true | |
+| `ci / demo (iOS Simulator)` | Yes | Skipped when `demo` is false |
+| `ci / demo (macOS)` | Yes | Skipped when `demo` is false |
 | `ci / docs` | No | Skipped on PRs; runs on `main` and before a release |
 
+`ios-platform` uses the same ruleset without required checks, since it has no CI of its own.
+`ultra-tools` has no ruleset: GitHub's free plan does not offer rulesets or branch protection
+for private repositories (see Exceptions in the Git workflow Standard).
+
 Renaming a job in the reusable workflow, or a caller job id, changes these names. Update this
-table and the branch protection rule in every repo in the same step.
+table, the `Main` ruleset in every library and the ruleset in `create-library.sh` in the
+same step.
 
 ## Enforcement
 
