@@ -45,7 +45,8 @@ platform/scripts/sync.sh --dry-run     # show what would change
 platform/scripts/sync.sh               # one PR per repo
 ```
 
-**Change CI.** Edit the reusable workflows here. Callers pin `@v1`, so after merging a
+**Change CI.** Edit the reusable workflows here, and update the matching diagram in
+[`.github/workflows/README.md`](.github/workflows/README.md). Callers pin `@v1`, so after merging a
 compatible change, move the tag; a breaking change to the inputs gets `v2`
 (see [`standards/ci.md`](standards/ci.md)):
 
