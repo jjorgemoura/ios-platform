@@ -58,16 +58,18 @@ flowchart LR
   start --> ci -->|needs| rel
 ```
 
-## `pr-title.yml`: PR title check
+## `pr-title.yml`: PR title and linked issue
 
 ```mermaid
 flowchart LR
   start(["pull_request in caller"])
   subgraph L["🐧 Linux"]
     check["check<br/>Conventional Commit title"]
+    issue["issue<br/>description references an issue<br/>chore · docs · ci · sync · Dependabot exempt"]
   end
-  start --> check
+  start --> check & issue
   check -.- c1{{"if pull_request"}}
+  issue -.- c2{{"if pull_request"}}
   classDef cond stroke-dasharray:5 5
-  class check cond
+  class check,issue cond
 ```
