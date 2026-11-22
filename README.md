@@ -27,7 +27,7 @@ Listed in [`platform/registry/repos.yml`](platform/registry/repos.yml).
 | [`.github/workflows/`](.github/workflows/) | Reusable workflows: `ci.yml` and `release.yml` for libraries, `ci-monorepo.yml` for the monorepo, `pr-title.yml` for every repo |
 | [`.github/actions/select-xcode/`](.github/actions/select-xcode/) | Selects the Xcode pinned in the caller's `.xcode-version` |
 | [`platform/templates/`](platform/templates/) | Scaffolds for new repos and the files synced into existing ones |
-| [`platform/scripts/`](platform/scripts/) | `create-library.sh`, `create-monorepo.sh`, `sync.sh` |
+| [`platform/scripts/`](platform/scripts/) | `create-library.sh`, `create-monorepo.sh`, `sync.sh`, `create-labels.sh` |
 
 ## How work flows
 
@@ -62,6 +62,14 @@ platform/scripts/create-library.sh gpx-swift GPXSwift "One sentence about the li
 ```
 platform/scripts/sync.sh --dry-run     # show what would change
 platform/scripts/sync.sh               # one PR per repo
+```
+
+**Create the issue labels** the agent skills use (triage and wayfinder), in every active repo.
+Safe to re-run; run it again after adding a repo:
+
+```
+platform/scripts/create-labels.sh --dry-run
+platform/scripts/create-labels.sh
 ```
 
 **Change CI.** Edit the reusable workflows here, and update the matching diagram in

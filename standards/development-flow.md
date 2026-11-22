@@ -41,7 +41,7 @@ blocking links. The PR closes the ticket (`Closes #N`).
 
 | Phase | In | Out (gate) | Skills |
 | --- | --- | --- | --- |
-| **0 · Setup** (once) | Registry entry, template | Repo from template, `AGENTS.md`, `GLOSSARY.md`, issue tracker set up for the agent skills, green CI | `create-library.sh`, `setup-matt-pocock-skills`, `writing-for-agents` |
+| **0 · Setup** (once) | Registry entry, template | Repo from template, `AGENTS.md` with the synced agent-skills setup (`docs/agents/`), labels on GitHub, green CI. `GLOSSARY.md` is created by `domain-modeling` the first time a term needs defining | `create-library.sh`, `sync.sh`, `create-labels.sh`, `writing-for-agents` |
 | **1 · Shape** | Idea, issue, bug report or crash cluster | Spec issue: problem, acceptance criteria, platforms and minimum OS. For a bug: a repro issue (steps or a failing test) | `grill-with-docs`, `research`, `domain-modeling`, `to-spec`, `triage` |
 | **2 · Design and plan** | Spec issue | ADR when a decision is made, API contract (OpenAPI) when a backend changes, ticket sub-issues in order | `codebase-design`, `prototype`, `to-tickets`, `wayfinder`, `pfw-*` |
 | **3 · Build** | One ticket | Code, passing tests, atomic commits, green CI on every platform | `tdd`, `implement`, `diagnosing-bugs`, `pfw-*` |

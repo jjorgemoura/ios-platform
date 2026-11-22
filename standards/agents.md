@@ -18,6 +18,7 @@ Coding agents get the same rules, commands and context as a human contributor, f
 | AGENT-4 | MUST | `AGENTS.md` lists or links every MUST rule in these standards |
 | AGENT-5 | MUST | Shared skills live in `.claude/skills/` and are synced from `platform` |
 | AGENT-6 | SHOULD | Each repo adds a library-specific section below the synced base |
+| AGENT-7 | MUST | The agent-skills setup (`docs/agents/`) is synced from `platform`, and the labels it names exist on GitHub |
 
 ## Enforcement
 
@@ -29,6 +30,7 @@ Coding agents get the same rules, commands and context as a human contributor, f
 | AGENT-4 | Review when standards change | `platform` PR |
 | AGENT-5 | Sync | `sync.sh` |
 | AGENT-6 | Review | `AGENTS.md` |
+| AGENT-7 | Sync; labels by `create-labels.sh` | `sync.sh`, `platform/scripts/create-labels.sh` |
 
 ## Exceptions
 
@@ -40,4 +42,4 @@ None.
 
 ## Last reviewed
 
-2026-10-23
+2026-11-22

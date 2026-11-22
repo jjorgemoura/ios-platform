@@ -27,6 +27,15 @@ says otherwise.
 - Swift 6 language mode with complete strict concurrency (CONC-1). Tests use Swift Testing.
 - Platform-specific UI and features go in separate packages (for example per platform or per
   paid feature), so an app target links only what it ships.
+- Work starts from a GitHub issue: a spec for a feature, a repro for a bug. The PR closes it
+  with `Closes #<n>` (FLOW-1, FLOW-2, FLOW-5). App releases go through TestFlight with the
+  privacy manifest reviewed (FLOW-7).
+
+### Agent skills
+- Issue tracker: GitHub issues, through `gh`. See `docs/agents/issue-tracker.md`.
+- Triage labels: the five defaults. See `docs/agents/triage-labels.md`.
+- Domain docs: single-context, `GLOSSARY.md` at the repo root; ADRs and standards are central
+  in `ios-platform`. See `docs/agents/domain.md`.
 
 ### Gotchas
 - `make lint`, `make test` and `make build PLATFORM=<platform>` run over every package in

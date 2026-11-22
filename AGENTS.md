@@ -10,6 +10,12 @@ This repo holds what every repo shares:
 - `platform/templates/` and `platform/scripts/`: scaffolds, plus `sync.sh` for shared files
 - `.github/`: reusable workflows and actions that the other repos call at `@v1`
 
+## Agent skills
+
+- Issue tracker: GitHub issues, through `gh`. See `docs/agents/issue-tracker.md`.
+- Triage labels: the five defaults. See `docs/agents/triage-labels.md`.
+- Domain docs: ADRs in `decisions/`, standards in `standards/`. See `docs/agents/domain.md`.
+
 ## Working across repos
 
 - Edit shared files (lint config, Makefile, the shared AGENTS block, shared skills) in
