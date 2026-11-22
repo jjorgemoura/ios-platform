@@ -25,3 +25,4 @@ Decisions for the iOS platform (the libraries, the apps monorepo and this repo),
 | [0013](0013-license-mit.md) | License the libraries under MIT | accepted |
 | [0014](0014-agent-instruction-files.md) | Use AGENTS.md as the canonical agent instruction file | accepted |
 | [0015](0015-development-flow.md) | Use a six-phase development flow with GitHub issues as the spec | accepted |
+| [0016](0016-sync-monorepo-with-exclusions.md) | Sync the apps monorepo too, except the files it owns | accepted |

@@ -37,8 +37,8 @@ This repo holds what every repo shares:
 - audio-swift (public library: spoken cues, playback, voice notes): ~/Developer/myProjs/audio-swift.
   Clone from https://github.com/jjorgemoura/audio-swift.git if missing. Read its AGENTS.md first.
 - ultra-tools (private monorepo of my App Store apps; uses the libraries as package
-  dependencies; not synced): ~/Developer/myProjs/ultra-tools. Clone from
-  https://github.com/jjorgemoura/ultra-tools.git if missing. Read its AGENTS.md first: it
+  dependencies; synced except the files it owns, see ADR-0016): ~/Developer/myProjs/ultra-tools.
+  Clone from https://github.com/jjorgemoura/ultra-tools.git if missing. Read its AGENTS.md first: it
   overrides some standards.
 - obsidian (private Obsidian vault, my notes and long-term memory): ~/Developer/myProjs/obsidian.
   Clone from https://github.com/jjorgemoura/obsidian.git if missing. Read-only unless I ask.

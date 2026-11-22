@@ -54,7 +54,9 @@ Check the template after changing it: scaffold with `--local`, then run `make li
 platform/scripts/create-monorepo.sh --into ~/Developer/myProjs/ultra-tools ultra-tools UltraTools "One sentence"
 ```
 
-The repo is private and not synced (`sync: false`). The script needs a clone whose only files are
-`LICENSE` and `README.md`, stages the scaffold and leaves the commit to you. CI calls
-`ci-monorepo.yml@v1`, so move the `v1` tag after pushing a change to that workflow. Try the
-template with `--local DIR`, then run `make lint`, `make test` and `make build PLATFORM=iOS`.
+The repo is private and synced like a library, except for the files the monorepo template owns
+and the library-only skills (`sync_exclude` in the registry: `AGENTS.md`, `Makefile`,
+`.gitignore`, `dependabot.yml`, `add-public-api`, `create-release`). The script needs a clone whose only files are `LICENSE` and `README.md`, stages the scaffold and
+leaves the commit to you. CI calls `ci-monorepo.yml@v1`, so move the `v1` tag after pushing a
+change to that workflow. Try the template with `--local DIR`, then run `make lint`, `make test`
+and `make build PLATFORM=iOS`.
