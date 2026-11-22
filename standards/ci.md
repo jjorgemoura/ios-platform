@@ -51,7 +51,7 @@ name from the reusable workflow.
 | `ci / demo (macOS)` | Yes | Skipped when `demo` is false |
 | `ci / docs` | No | Skipped on PRs; runs on `main` and before a release |
 | `pr-title / check` | Yes | Separate `PR title` workflow (GIT-3), synced from `platform/templates/sync` |
-| `pr-title / issue` | Yes | Same workflow: the description references an issue (FLOW-5) |
+| `pr-title / issue` | No | Same workflow: the description references an issue (FLOW-5). Advisory for now: it reports on every PR but does not block the merge |
 
 `ios-platform` uses the same ruleset without required checks, since it has no CI of its own.
 `ultra-tools` has no ruleset: GitHub's free plan does not offer rulesets or branch protection

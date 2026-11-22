@@ -75,7 +75,7 @@ Rules use RFC 2119 levels: MUST (required), SHOULD (expected unless there is a g
 | FLOW-2 | Review | PR |
 | FLOW-3 | Review (`to-tickets` creates the sub-issues) | spec issue |
 | FLOW-4 | Review | PR |
-| FLOW-5 | `pr-title / issue` check: the description references an issue; exempt titles, sync and Dependabot pass | reusable `pr-title.yml` |
+| FLOW-5 | `pr-title / issue` check (advisory, not a required check): the description references an issue; exempt titles, sync and Dependabot pass | reusable `pr-title.yml` |
 | FLOW-6 | Review | PR |
 | FLOW-7 | Review; an automated check is planned | `ultra-tools` release |
 | FLOW-8 | Review | `ultra-tools` issues |
