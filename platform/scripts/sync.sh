@@ -3,8 +3,9 @@
 # sync.sh — copy the shared files in platform/templates/sync into library repos.
 #
 # Usage:
-#   sync.sh --local-dir DIR        Apply to a local checkout. Nothing is committed or pushed:
-#                                  review the result with `git diff` in DIR. Needs no gh.
+#   sync.sh --local-dir DIR [repo] Apply to a local checkout. Nothing is committed or pushed:
+#                                  review the result with `git diff` in DIR. Needs no gh. Name
+#                                  the repo to apply its sync_exclude list.
 #   sync.sh [--dry-run] [repo ...] Clone each repo, apply, and open (or update) one pull
 #                                  request per repo. Repos come from registry/repos.yml:
 #                                  status: active and sync: true. Name repos to limit it.
@@ -16,9 +17,12 @@
 #   templates/sync/AGENTS.md    -> the block between the BEGIN/END platform markers inside
 #                                  <repo>/AGENTS.md; the library part below it is kept.
 #
+# Exclusions: a repo's `sync_exclude: [path, ...]` in registry/repos.yml lists template files or
+# folders (relative to templates/sync) that the repo owns or that do not apply to it. They are
+# never written (ADR-0016).
+#
 # Known gaps (TODO):
 #   - Files deleted from templates/sync are not deleted in the repos.
-#   - Per-repo exclusions are not supported.
 #
 # Requirements: bash 3.2+, git, awk. For the PR mode also gh (authenticated).
 
@@ -43,7 +47,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run)   DRY_RUN=true ;;
     --local-dir) LOCAL_DIR="${2:?--local-dir needs a directory}"; shift ;;
-    -h|--help)   sed -n '2,24p' "$0"; exit 0 ;;
+    -h|--help)   sed -n '2,27p' "$0"; exit 0 ;;
     *)           ONLY+=("$1") ;;
   esac
   shift
@@ -74,11 +78,37 @@ sync_managed_block() {
   rm -f "$tmp"
 }
 
-# Copy every template file into the repo checkout at $1.
+# Template paths repo $1 owns, one per line, from its `sync_exclude: [a, b]` registry entry.
+registry_excludes() {
+  awk -v n="$1" '
+    /^  - name:/ { inrepo = ($3 == n); next }
+    inrepo && /^    sync_exclude:/ {
+      sub(/^    sync_exclude: *\[/, ""); sub(/\].*$/, "")
+      count = split($0, items, ",")
+      for (i = 1; i <= count; i++) { gsub(/^ +| +$/, "", items[i]); if (items[i] != "") print items[i] }
+    }
+  ' "$REGISTRY"
+}
+
+# True when template path $1 is in the exclusion list $2, or inside an excluded folder.
+is_excluded() {
+  local rel="$1" item
+  while IFS= read -r item; do
+    [[ -n "$item" ]] || continue
+    if [[ "$rel" == "$item" || "$rel" == "${item%/}/"* ]]; then return 0; fi
+  done <<< "$2"
+  return 1
+}
+
+# Copy every template file into the repo checkout at $1, skipping the paths repo $2 owns.
 apply_templates() {
-  local repo_dir="$1" file rel
+  local repo_dir="$1" repo="${2:-}" file rel excludes=""
+  [[ -n "$repo" ]] && excludes="$(registry_excludes "$repo")"
   while IFS= read -r -d '' file; do
     rel="${file#"$TEMPLATES"/}"
+    if is_excluded "$rel" "$excludes"; then
+      continue
+    fi
     mkdir -p "$repo_dir/$(dirname "$rel")"
     if [[ "$rel" == "AGENTS.md" ]]; then
       sync_managed_block "$file" "$repo_dir/$rel"
@@ -108,7 +138,7 @@ sync_repo_in() {
   use_platform_identity "$dir"
   use_gh_credentials "$dir"
 
-  apply_templates "$dir"
+  apply_templates "$dir" "$name"
 
   if [[ -z "$(git -C "$dir" status --porcelain)" ]]; then
     log "$name" "up to date"
@@ -155,7 +185,7 @@ sync_repo() {
 
 if [[ -n "$LOCAL_DIR" ]]; then
   [[ -d "$LOCAL_DIR" ]] || { echo "error: $LOCAL_DIR is not a directory" >&2; exit 1; }
-  apply_templates "$LOCAL_DIR"
+  apply_templates "$LOCAL_DIR" "${ONLY[0]:-}"
   log "$(basename "$LOCAL_DIR")" "applied. Review with: git -C \"$LOCAL_DIR\" diff"
   exit 0
 fi

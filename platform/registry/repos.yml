@@ -1,4 +1,7 @@
-# Inventory of every repository in the project. Read by platform/scripts/sync.sh (status: active and sync: true).
+# Inventory of every repository in the project. Read by platform/scripts/sync.sh (status: active and sync: true)
+# and platform/scripts/create-labels.sh (status: active).
+# sync_exclude: template files or folders (relative to platform/templates/sync) the repo owns or that do not
+# apply to it; sync.sh never writes them.
 owner: jjorgemoura
 
 repos:
@@ -25,4 +28,8 @@ repos:
   - name: ultra-tools
     visibility: private
     status: active
-    sync: false          # app keeps its own config for now
+    sync: true
+    # The monorepo owns these: its Makefile loops over Packages/, its AGENTS.md is standalone
+    # (local packages depend on each other, against API-1). The two skills are for libraries
+    # (public API with SemVer, the library Release workflow). ADR-0016.
+    sync_exclude: [AGENTS.md, Makefile, .gitignore, .github/dependabot.yml, .claude/skills/add-public-api, .claude/skills/create-release]

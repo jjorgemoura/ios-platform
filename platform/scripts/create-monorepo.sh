@@ -21,8 +21,9 @@
 #   2. replace the __TOKENS__ in file contents and in file and folder names
 #   3. stage (--into) or git init and commit (--local)
 #
-# Unlike libraries, the monorepo is not synced (sync: false in the registry) and its AGENTS.md is
-# standalone: it has no synced block.
+# The monorepo is synced like a library, except for the files it owns (sync_exclude in the
+# registry, ADR-0016): AGENTS.md (standalone, no synced block), Makefile, .gitignore and
+# dependabot.yml.
 #
 # Requirements: bash 3.2+, git, perl.
 
@@ -68,7 +69,7 @@ PLATFORM_SHA="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo unknow
 
 log() { printf '[%s] %s\n' "$NAME" "$1"; }
 
-# Mark the repo active in the registry, or add it as a private, unsynced repo.
+# Mark the repo active in the registry, or add it as a private repo synced minus the files it owns.
 mark_active() {
   if grep -q "^  - name: $NAME\$" "$REGISTRY"; then
     awk -v n="$NAME" '
@@ -77,7 +78,7 @@ mark_active() {
       { print }
     ' "$REGISTRY" > "$REGISTRY.tmp" && mv "$REGISTRY.tmp" "$REGISTRY"
   else
-    printf '  - name: %s\n    visibility: private\n    status: active\n    sync: false\n' "$NAME" >> "$REGISTRY"
+    printf '  - name: %s\n    visibility: private\n    status: active\n    sync: true\n    sync_exclude: [AGENTS.md, Makefile, .gitignore, .github/dependabot.yml, .claude/skills/add-public-api, .claude/skills/create-release]\n' "$NAME" >> "$REGISTRY"
   fi
 }
 
