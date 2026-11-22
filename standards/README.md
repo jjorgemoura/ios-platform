@@ -22,3 +22,4 @@ The rules that apply now, one file per area. ADRs in `../decisions/` explain why
 | [Git workflow](git-workflow.md) | GIT | Branches, PRs, commits |
 | [CI](ci.md) | CI | Reusable workflows, pinning |
 | [Agents](agents.md) | AGENT | AGENTS.md, CLAUDE.md, skills |
+| [Development flow](development-flow.md) | FLOW | Phases, gate artifacts, specs in GitHub issues |
