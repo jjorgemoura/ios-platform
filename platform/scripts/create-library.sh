@@ -248,7 +248,8 @@ if $PROTECT; then
           { "context": "ci / build (visionOS)", "integration_id": 15368 },
           { "context": "ci / demo (iOS Simulator)", "integration_id": 15368 },
           { "context": "ci / demo (macOS)", "integration_id": 15368 },
-          { "context": "pr-title / check", "integration_id": 15368 } ] } }
+          { "context": "pr-title / check", "integration_id": 15368 },
+          { "context": "pr-title / issue", "integration_id": 15368 } ] } }
   ]
 }
 JSON

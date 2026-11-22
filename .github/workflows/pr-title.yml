@@ -1,9 +1,16 @@
 name: PR title (reusable)
 
-# Called by every repo (GIT-3). Release notes are generated from PR titles (REL-2), and the
-# create-release skill picks the version bump from them, so each title is a Conventional Commit:
+# Called by every repo. Two checks on the pull request itself:
+#
+# check (GIT-3): release notes are generated from PR titles (REL-2), and the create-release skill
+# picks the version bump from them, so each title is a Conventional Commit:
 # `type(optional scope)!: description`, for example `feat(parser): read extensions` or
 # `fix!: drop the deprecated reader`.
+#
+# issue (FLOW-5): the description closes or references the issue the work comes from, as
+# `Closes #12`, `Refs #12`, `owner/repo#12` or an issue URL. Exempt: `chore`, `docs` and `ci`
+# titles, the `platform-sync` branch and Dependabot. The check does not look the number up (the
+# caller grants no token), so it trusts that `#12` is an issue.
 #
 #   on:
 #     pull_request:
@@ -34,5 +41,36 @@ jobs:
             echo "Expected 'type(scope)!: description' with type one of feat, fix, docs, style,"
             echo "refactor, perf, test, build, ci, chore, revert. Scope and '!' are optional;"
             echo "'!' marks a breaking change. Edit the title and the check runs again."
+            exit 1
+          fi
+
+  issue:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Linked issue
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          BODY: ${{ github.event.pull_request.body }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          exempt='^(chore|docs|ci)(\([a-z0-9._/-]+\))?!?: '
+          if [[ "$TITLE" =~ $exempt ]]; then
+            echo "Exempt: '${TITLE%%:*}' PR (FLOW-5)."; exit 0
+          fi
+          if [[ "$HEAD_REF" == "platform-sync" || "$AUTHOR" == "dependabot[bot]" ]]; then
+            echo "Exempt: sync or Dependabot PR (FLOW-5)."; exit 0
+          fi
+          ref='(^|[^[:alnum:]_&/])([[:alnum:]_.-]+/[[:alnum:]_.-]+)?#[0-9]+([^[:alnum:]_]|$)'
+          url='https://github\.com/[[:alnum:]_.-]+/[[:alnum:]_.-]+/issues/[0-9]+'
+          if [[ "$BODY" =~ $ref || "$BODY" =~ $url ]]; then
+            echo "OK: references ${BASH_REMATCH[0]//[[:space:]]/}"
+          else
+            echo "::error::The PR description does not reference an issue (FLOW-5)."
+            echo "Add 'Closes #<n>' (or 'Refs #<n>' when the PR does not finish the issue) to the"
+            echo "description; the check runs again when you save it. Work starts from an issue:"
+            echo "a spec for a feature, a repro for a bug (standards/development-flow.md in"
+            echo "ios-platform). chore, docs and ci PRs are exempt."
             exit 1
           fi
