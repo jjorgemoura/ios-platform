@@ -20,6 +20,9 @@ This repo holds what every repo shares:
 
 - Edit shared files (lint config, Makefile, the shared AGENTS block, shared skills) in
   `platform/templates/sync/`, then run `platform/scripts/sync.sh`. Never edit them in a library.
+- A change to a file in a repo's `sync_exclude` list (the monorepo's `AGENTS.md`, `Makefile`,
+  `.gitignore`, `dependabot.yml`) does not reach that repo. If it applies there, make it in
+  `platform/templates/monorepo/` and in `ultra-tools` too (ADR-0016).
 - After changing a reusable workflow or action, move the `v1` tag.
 - In child repos, work on a branch. Pushing is my call.
 

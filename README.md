@@ -57,12 +57,16 @@ platform/scripts/create-library.sh gpx-swift GPXSwift "One sentence about the li
 ```
 
 **Change a shared file** (lint config, Makefile, agent instructions, skills). Edit it in
-`platform/templates/sync/`, then open a sync PR in every active library:
+`platform/templates/sync/`, then open a sync PR in every synced repo (the libraries and `ultra-tools`):
 
 ```
 platform/scripts/sync.sh --dry-run     # show what would change
 platform/scripts/sync.sh               # one PR per repo
 ```
+
+A change to a file in a repo's `sync_exclude` list (the monorepo's `AGENTS.md`, `Makefile`,
+`.gitignore`, `dependabot.yml`) does not reach that repo. If it applies there, make it in
+`platform/templates/monorepo/` and in `ultra-tools` too (ADR-0016).
 
 **Create the issue labels** the agent skills use (triage and wayfinder), in every active repo.
 Safe to re-run; run it again after adding a repo:
