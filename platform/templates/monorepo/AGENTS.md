@@ -2,10 +2,9 @@
 
 __DESCRIPTION__
 
-Private monorepo of the apps to release on the App Store. Shared files (lint and format config,
-`.xcode-version`, `CLAUDE.md`, skills, `docs/agents/`) are synced from `ios-platform`; edit them
-there. This file, the Makefile, `.gitignore` and `dependabot.yml` belong to this repo and are
-never synced (ADR-0016).
+Shared files (lint and format config, `.xcode-version`, `CLAUDE.md`, skills, `docs/agents/`)
+are synced from `ios-platform`; edit them there. This file, the Makefile, `.gitignore` and
+`dependabot.yml` belong to this repo and are never synced (ADR-0016).
 The public libraries (gpx-swift, fit-swift, gps-swift, audio-swift, map-swift) live in their own
 repos and are consumed as package dependencies.
 
